@@ -4,10 +4,52 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
-    <link rel="stylesheet" href="main.css" />
+    <title>ToDo</title>
   </head>
   <body>
-    <img src="../application/images/asd.jpg" alt="" />
+    <header>
+      <span class="logo">ToDo</span>
+    </header>
+
+    <main id="root">
+      <form id="mainForm">
+        <input type="search" name="search" id="search" />
+        <select name="status" id="status">
+          <option value="open">Open</option>
+          <option value="done">Done</option>
+        </select>
+        <select name="priority" id="priority">
+          <option value="high">High</option>
+          <option value="normal">Normal</option>
+          <option value="low">Low</option>
+        </select>
+      </form>
+      <button id="create">Create</button>
+    </main>
+
+    <footer>
+      <span class="author">Maksym Yepanchyn</span>
+    </footer>
+
+    <form id="create-form">
+      <label>
+        <span>Title</span>
+        <input type="text" name="title" placeholder="Title" />
+      </label>
+      <label>
+        <span>Description</span>
+        <textarea name="description" placeholder="Description"></textarea>
+      </label>
+      <label>
+        <span>Priority</span>
+        <select name="priority">
+          <option value="high">High</option>
+          <option value="normal">Normal</option>
+          <option value="Low">Low</option>
+        </select>
+      </label>
+      <button name="cancel" type="reset">Cancel</button>
+      <button name="save">Save</button>
+    </form>
   </body>
 </html>
