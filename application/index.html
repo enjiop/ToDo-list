@@ -7,49 +7,45 @@
     <title>ToDo</title>
   </head>
   <body>
-    <header>
-      <span class="logo">ToDo</span>
+    <header id="header">
+        <div class="container main-menu">
+          <div class="row align-items-center justify-content-between">
+            <div id="logo">
+              <span class="logo">ToDo</span>
+            </div>
     </header>
 
     <main id="root">
-      <form id="mainForm">
-        <input type="search" name="search" id="search" />
-        <select name="status" id="status">
-          <option value="open">Open</option>
-          <option value="done">Done</option>
-        </select>
-        <select name="priority" id="priority">
-          <option value="high">High</option>
-          <option value="normal">Normal</option>
-          <option value="low">Low</option>
-        </select>
-      </form>
-      <button id="create">Create</button>
+      <div class="container">
+      <div class="row justify-content-center">
+          <form id="searchAndFilterForm" class ="col-10">
+              <input type="search" name="search" id="search" />
+              <select name="statusFilter" id="status">
+                <option value="all" selected>All</option>
+                <option value="open">Open</option>
+                <option value="done">Done</option>
+              </select>
+              <select name="priorityFilter" id="priority">
+                <option value="all" selected>All</option>
+                <option value="high">High</option>
+                <option value="normal">Normal</option>
+                <option value="low">Low</option>
+              </select>
+          </form>
+          <button id="showCreateForm" class="col-2 btn">Create</button>
+      </div>
+      
+      </div>
     </main>
 
     <footer>
-      <span class="author">Maksym Yepanchyn</span>
+      <div class="container">
+        <div class="row align-items-center justify-content-between">
+          <span class="author">Maksym Yepanchyn</span>
+        </div> 
+      </div>
     </footer>
 
-    <form id="create-form">
-      <label>
-        <span>Title</span>
-        <input type="text" name="title" placeholder="Title" />
-      </label>
-      <label>
-        <span>Description</span>
-        <textarea name="description" placeholder="Description"></textarea>
-      </label>
-      <label>
-        <span>Priority</span>
-        <select name="priority">
-          <option value="high">High</option>
-          <option value="normal">Normal</option>
-          <option value="Low">Low</option>
-        </select>
-      </label>
-      <button name="cancel" type="reset">Cancel</button>
-      <button name="save">Save</button>
-    </form>
+    <div id="bg" class="_hidden"></div>
   </body>
 </html>

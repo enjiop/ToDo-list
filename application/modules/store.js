@@ -21,6 +21,10 @@ class Store {
     this.observable.forEach((behavior) => behavior());
   }
 
+  getAllTasks() {
+    return JSON.parse(localStorage[this.name]).todos;
+  }
+
   getTask(id) {
     const data = JSON.parse(localStorage[this.name]);
     const resultTask = data.todos.find(
@@ -35,21 +39,23 @@ class Store {
 
   save(newData, id) {
     const data = JSON.parse(localStorage[this.name]);
+    let changeData;
     if (id) {
-      const newTodos = data.todos.map((task) => {
+      const changedAll = data.todos.map((task) => {
         if (Number(task.id) === Number(id)) {
-          return { ...task, ...newData };
+          changeData = { ...task, ...newData };
+          return changeData;
         }
         return task;
       });
-      data.todos = newTodos;
+      data.todos = changedAll;
+      localStorage[this.name] = JSON.stringify(data);
     } else {
-      // Generate ID
-      const newTask = { ...{ id: new Date().getTime() }, ...newData };
-      data.todos.push(newTask);
+      changeData = { ...{ id: new Date().getTime() }, ...newData };
+      data.todos.push(changeData);
+      localStorage[this.name] = JSON.stringify(data);
     }
-    localStorage[this.name] = JSON.stringify(data);
-    this.notify();
+    return changeData;
   }
 
   remove(id) {
