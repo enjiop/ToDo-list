@@ -17,4 +17,4 @@ $ npm run build
 
 ## Demo
 
-[https://enjiop.github.io/ToDo-list/public] Demo Link!
+[Demo Link!](https://enjiop.github.io/ToDo-list/public)
