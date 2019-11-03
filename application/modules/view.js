@@ -233,11 +233,11 @@ const closeAllDropdowns = () => {
 
 TaskView.prototype.toggleDropdownMenu = (taskNode) => () => {
   const dropMenu = taskNode.querySelector('.list__edit-container');
+  closeAllDropdowns();
   if (dropMenu.classList.contains('._hidden')) {
-    dropMenu.classList.toggle('_hidden');
+    dropMenu.classList.add('_hidden');
   } else {
-    closeAllDropdowns();
-    dropMenu.classList.toggle('_hidden');
+    dropMenu.classList.remove('_hidden');
   }
 };
 
