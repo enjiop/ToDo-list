@@ -1,6 +1,6 @@
 import './sass/main.sass';
-import 'normalize.css';
-import 'bootstrap-css';
+// import 'normalize.css';
+// import 'bootstrap-css';
 
 import Store from './modules/store';
 import TaskModel from './modules/model';
