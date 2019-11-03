@@ -21,8 +21,11 @@ $white			: #fff
     color: $white
     padding: 12px 20px
 
+    &:hover
+        opacity: .9
+
 input, select, textarea
-    padding: 5px
+    padding: 5px 10px
     background: $white
     border: none
     border: 1px solid $border-color
@@ -47,7 +50,7 @@ body
     .logo
         display: block
         font-size: 24px
-        margin: 5px 0
+        margin: 15px 0
 
 #searchAndFilterForm
     display: flex
@@ -134,18 +137,26 @@ footer
         ul.list__edit-nav
             position: absolute
             display: flex
-            background-color: $white
+            background-color: #fff
             width: 150px
-            bottom: -150px
+            bottom: -185px
             left: 50%
             transform: translateX(-50%)
             border: 1px solid $primary-color
             flex-direction: column
             padding: 10px
             text-align: center
+            z-index: 999
 
             li.list__edit-item
                 list-style: none
+
+                ._status
+                    cursor: pointer
+                    width: 100%
+
+                    input
+                        display: none
 
                 button
                     margin-bottom: 5px

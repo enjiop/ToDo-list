@@ -91,7 +91,7 @@ class TaskView extends EventEmmiter {
       <div class="list__edit-container _hidden">
         <ul class="list__edit-nav">
           <li class="list__edit-item">
-            <label class="_status">
+            <label class="_status btn">
               <span>${status ? 'Done task' : 'Open task'}</span>
               <input type="checkbox" name="status" ${status ? 'checked' : ''}>
             </label>
@@ -164,9 +164,9 @@ class TaskView extends EventEmmiter {
     this.bg.classList.remove('_hidden');
     const createForm = this.createFormInit();
 
-    console.log(mode, id);
+    console.log(mode, id, createForm.cancel);
 
-    createForm.cancel.addEventListener('cancel', this.removeForm.bind(this));
+    createForm.cancel.addEventListener('click', this.removeForm.bind(this));
 
     if (mode === 'edit') {
       createForm.addEventListener('submit', this.handleSave(mode, id));
@@ -179,14 +179,15 @@ class TaskView extends EventEmmiter {
 
   removeForm() {
     const form = document.getElementById('createForm');
-    this.root.removeChild(form);
+    console.log(form);
+    form.classList.add('_hidden');
     this.bg.classList.add('_hidden');
+    this.root.removeChild(form);
   }
 
   addTask(task) {
     const listItem = this.createListItem(task);
     this.listContainer.appendChild(listItem);
-    this.clearForm(this.createForm);
   }
 
   toggleStatus({ id }) {
@@ -223,20 +224,21 @@ class TaskView extends EventEmmiter {
   }
 }
 
-TaskView.prototype.toggleDropdownMenu = (taskNode) => () => {
-  const dropMenu = taskNode.querySelector('.list__edit-container');
-  dropMenu.classList.toggle('_hidden');
+const closeAllDropdowns = () => {
+  const dropdowns = document.querySelectorAll('.list__edit-container');
+  Array.from(dropdowns).forEach((item) => {
+    item.classList.add('_hidden');
+  });
 };
 
-TaskView.prototype.clearForm = (form) => {
-  const elements = Array.from(form.elements);
-  elements.forEach((el) => {
-    if (el.nodeName !== 'SELECT') {
-      el.value = null;
-    } else if (el.name === 'priority') {
-      el.value = 'normal';
-    }
-  });
+TaskView.prototype.toggleDropdownMenu = (taskNode) => () => {
+  const dropMenu = taskNode.querySelector('.list__edit-container');
+  if (dropMenu.classList.contains('._hidden')) {
+    dropMenu.classList.toggle('_hidden');
+  } else {
+    closeAllDropdowns();
+    dropMenu.classList.toggle('_hidden');
+  }
 };
 
 export default TaskView;
