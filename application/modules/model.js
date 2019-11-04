@@ -37,7 +37,6 @@ class TaskModel extends EventEmmiter {
     const data = this.getAll();
     const parsedStatus = this.parseStatusValue(status);
     const field = this.getFilterField(parsedStatus, priority);
-    console.log(status, priority, field, parsedStatus, data);
     let filteredData = [];
 
     switch (field) {

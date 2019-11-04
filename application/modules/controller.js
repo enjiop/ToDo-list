@@ -23,7 +23,6 @@ class Controller {
 
   toggleStatus({ id, status }) {
     const task = this.model.updateTask({ status }, id);
-    console.log(task);
     this.view.toggleStatus(task);
   }
 
@@ -34,7 +33,6 @@ class Controller {
 
   editTask({ newData, id }) {
     const task = this.model.updateTask(newData, id);
-    console.log(newData, id, task);
 
     this.view.editTask(task, id);
   }
