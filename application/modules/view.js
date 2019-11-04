@@ -116,8 +116,6 @@ class TaskView extends EventEmmiter {
     const deleteBtn = item.querySelector('button._delete');
     const id = item.dataset.id;
 
-    console.log(item, id);
-
     toogleMenu.addEventListener('click', this.toggleDropdownMenu(item));
     status.addEventListener('change', this.handleToggleStatusTask(item));
     editBtn.addEventListener('click', this.showCreateEditForm('edit', id));
@@ -161,10 +159,9 @@ class TaskView extends EventEmmiter {
   }
 
   showCreateEditForm = (mode, id) => () => {
+    this.closeAllDropdowns();
     this.bg.classList.remove('_hidden');
     const createForm = this.createFormInit();
-
-    console.log(mode, id, createForm.cancel);
 
     createForm.cancel.addEventListener('click', this.removeForm.bind(this));
 
@@ -222,23 +219,23 @@ class TaskView extends EventEmmiter {
     listDescription.textContent = description;
     listPriority.textContent = priority;
   }
+
+  closeAllDropdowns = () => {
+    const dropdowns = document.querySelectorAll('.list__edit-container');
+    Array.from(dropdowns).forEach((item) => {
+      item.classList.add('_hidden');
+    });
+  };
+
+  toggleDropdownMenu = (taskNode) => () => {
+    const dropMenu = taskNode.querySelector('.list__edit-container');
+    if (!dropMenu.classList.contains('_hidden')) {
+      dropMenu.classList.toggle('_hidden');
+    } else {
+      this.closeAllDropdowns();
+      dropMenu.classList.toggle('_hidden');
+    }
+  };
 }
-
-const closeAllDropdowns = () => {
-  const dropdowns = document.querySelectorAll('.list__edit-container');
-  Array.from(dropdowns).forEach((item) => {
-    item.classList.add('_hidden');
-  });
-};
-
-TaskView.prototype.toggleDropdownMenu = (taskNode) => () => {
-  const dropMenu = taskNode.querySelector('.list__edit-container');
-  closeAllDropdowns();
-  if (dropMenu.classList.contains('._hidden')) {
-    dropMenu.classList.add('_hidden');
-  } else {
-    dropMenu.classList.remove('_hidden');
-  }
-};
 
 export default TaskView;
