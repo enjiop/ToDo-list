@@ -20,7 +20,7 @@ class TaskView extends EventEmmiter {
       this.showCreateEditForm('add'),
     );
 
-    search.addEventListener('change', this.handleSearchTask.bind(this));
+    search.addEventListener('input', this.handleSearchTask.bind(this));
     statusFilter.addEventListener('change', this.handleFiltering.bind(this));
     priorityFilter.addEventListener('change', this.handleFiltering.bind(this));
 
@@ -38,20 +38,27 @@ class TaskView extends EventEmmiter {
       noItemsMessage.textContent = 'No tasks...';
       this.listContainer.appendChild(noItemsMessage);
     }
-    tasks.forEach((task) => {
+    tasks.forEach(task => {
       const listItem = this.createListItem(task);
       this.listContainer.appendChild(listItem);
     });
   }
 
-  handleSearchTask({ target }) {}
+  handleSearchTask() {
+    const { search, status, priority } = this.searchAndFilterForm;
+    this.emit('search', {
+      searchQuery: search.value,
+      status: status.value,
+      priority: priority.value,
+    });
+  }
 
   handleFiltering() {
     const { status, priority } = this.searchAndFilterForm;
     this.emit('filter', { status: status.value, priority: priority.value });
   }
 
-  handleSave = (mode, id) => (e) => {
+  handleSave = (mode, id) => e => {
     e.preventDefault();
     const form = document.getElementById('createForm');
     const { title, description, priority } = form;
@@ -124,13 +131,13 @@ class TaskView extends EventEmmiter {
     return item;
   }
 
-  handleToggleStatusTask = (taskNode) => ({ target }) => {
+  handleToggleStatusTask = taskNode => ({ target }) => {
     const id = taskNode.dataset.id;
     const status = target.checked;
     this.emit('toggle', { id, status });
   };
 
-  handleDeleteTask = (taskNode) => () => {
+  handleDeleteTask = taskNode => () => {
     this.emit('delete', taskNode.dataset.id);
   };
 
@@ -222,12 +229,12 @@ class TaskView extends EventEmmiter {
 
   closeAllDropdowns = () => {
     const dropdowns = document.querySelectorAll('.list__edit-container');
-    Array.from(dropdowns).forEach((item) => {
+    Array.from(dropdowns).forEach(item => {
       item.classList.add('_hidden');
     });
   };
 
-  toggleDropdownMenu = (taskNode) => () => {
+  toggleDropdownMenu = taskNode => () => {
     const dropMenu = taskNode.querySelector('.list__edit-container');
     if (!dropMenu.classList.contains('_hidden')) {
       dropMenu.classList.toggle('_hidden');

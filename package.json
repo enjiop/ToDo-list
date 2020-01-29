@@ -1,7 +1,7 @@
 {
   "name": "todo",
   "version": "0.1.0",
-  "description": "ToDo-list application for Ciclum",
+  "description": "ToDo-list application",
   "main": "./application/index.js",
   "scripts": {
     "start": "webpack-dev-server --config ./webpack/webpack.dev.js --open",

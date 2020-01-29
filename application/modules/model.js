@@ -33,7 +33,7 @@ class TaskModel extends EventEmmiter {
     return this.storage.save(updateData, id);
   }
 
-  filter({ status, priority }) {
+  filterData({ status, priority }) {
     const data = this.getAll();
     const parsedStatus = this.parseStatusValue(status);
     const field = this.getFilterField(parsedStatus, priority);
@@ -44,14 +44,18 @@ class TaskModel extends EventEmmiter {
         filteredData = data;
         break;
       case 'priority':
-        filteredData = data.filter((el) => el.priority === priority);
+        filteredData = data.filter(
+          el => el.priority.toLowerCase() === priority.toLowerCase(),
+        );
         break;
       case 'status':
-        filteredData = data.filter((el) => el.status === parsedStatus);
+        filteredData = data.filter(el => el.status === parsedStatus);
         break;
       case 'both':
         filteredData = data.filter(
-          (el) => el.priority === priority && el.status === parsedStatus,
+          el =>
+            el.priority === priority.toLowerCase() &&
+            el.status === parsedStatus,
         );
         break;
       default:
@@ -60,6 +64,17 @@ class TaskModel extends EventEmmiter {
     }
 
     return filteredData;
+  }
+
+  searchData({ searchQuery, status, priority }) {
+    const data = this.filterData({ status, priority });
+    if (searchQuery === '') {
+      return data;
+    }
+
+    return data.filter(
+      task => task.title.toLowerCase().indexOf(searchQuery) + 1,
+    );
   }
 }
 
@@ -78,7 +93,7 @@ TaskModel.prototype.getFilterField = (statusValue, priorityValue) => {
   return field;
 };
 
-TaskModel.prototype.parseStatusValue = (statusValue) => {
+TaskModel.prototype.parseStatusValue = statusValue => {
   let parsedStatus;
   if (statusValue === 'open') {
     parsedStatus = true;

@@ -8,6 +8,7 @@ class Controller {
     view.on('delete', this.deleteTask.bind(this));
     view.on('edit', this.editTask.bind(this));
     view.on('filter', this.filter.bind(this));
+    view.on('search', this.search.bind(this));
 
     view.show(model.getAll());
   }
@@ -38,8 +39,13 @@ class Controller {
   }
 
   filter({ status, priority }) {
-    const filteredData = this.model.filter({ status, priority });
+    const filteredData = this.model.filterData({ status, priority });
     this.view.show(filteredData);
+  }
+
+  search({ searchQuery, status, priority }) {
+    const data = this.model.searchData({ searchQuery, status, priority });
+    this.view.show(data);
   }
 }
 
